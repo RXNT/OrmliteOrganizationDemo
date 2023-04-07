@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RXNT.OrganizationDemo", "RXNT.OrganizationDemo\RXNT.OrganizationDemo.csproj", "{4D73CB43-A05A-4883-BE40-F84ACB320986}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D73CB43-A05A-4883-BE40-F84ACB320986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D73CB43-A05A-4883-BE40-F84ACB320986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D73CB43-A05A-4883-BE40-F84ACB320986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D73CB43-A05A-4883-BE40-F84ACB320986}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C580BFB-A4D6-4E76-9B09-7D204FE669DB}
+	EndGlobalSection
+EndGlobal
