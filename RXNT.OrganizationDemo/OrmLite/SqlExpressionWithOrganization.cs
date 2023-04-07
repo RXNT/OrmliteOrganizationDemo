@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,19 @@ namespace RXNT.OrganizationDemo.OrmLite
             if (OrganizationId.HasValue)
             {
                 sql = MakeOrganizationAware(sql, OrganizationId);
+
+                // Add to parameters
+                if (!this.Params.Exists(q => q.ParameterName == nameof(OrganizationId)))
+                {
+                    this.Params.Add(new OrmLiteDataParameter()
+                    {
+                        DbType = DbType.Int64,
+                        ParameterName = "OrganizationId",
+                        IsNullable = false,
+                        Direction = ParameterDirection.Input,
+                        Value = OrganizationId
+                    });
+                }
             }
 
             return SqlFilter != null
@@ -75,7 +89,8 @@ namespace RXNT.OrganizationDemo.OrmLite
                 if (metadata?.IsTenantAware ?? false == true)
                 {
                     // Ideally key off OrmLite settings for the right escape
-                    token.Text = $"(SELECT t.* FROM \"{tableName}\" AS t INNER JOIN OrganizationDRO o ON o.OrganizationId = {_organizationId} AND o.ChildId = t.OrganizationId)";
+                    //token.Text = $"(SELECT t.* FROM \"{tableName}\" AS t INNER JOIN OrganizationDRO o ON o.OrganizationId = {_organizationId} AND o.ChildId = t.OrganizationId)";
+                    token.Text = $"(SELECT t.* FROM \"{tableName}\" AS t INNER JOIN OrganizationDRO o ON o.OrganizationId = @OrganizationId AND o.ChildId = t.OrganizationId)";
 
                     if (!string.IsNullOrWhiteSpace(alias))
                     {
