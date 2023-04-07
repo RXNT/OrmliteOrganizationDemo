@@ -18,3 +18,57 @@ is used to parse the query and find references to named tables.  The named table
 an automatically generated subquery.
 
 *Note: the subquery currently uses a hardcoded organization value.  Ideally this organization value would use a parameter.
+
+## Output
+
+### Relevant code
+``` 
+var exp = Db.From<Prescription>().Where(q=>q.Name.Contains("Rx"));
+var results1 = Db.Select(exp);
+Console.WriteLine(results1.TextDump());
+Console.WriteLine("=============================");
+
+
+var exp2 = exp.WithOrganization(2);
+var results2 = Db.Select(exp2);
+Console.WriteLine(results2.TextDump());
+Console.WriteLine("=============================");
+```
+
+### Console results
+```
+Executing:
+SELECT "Id", "Name", "OrganizationId"
+FROM "Prescription"
+WHERE "Name" like @0
+
+Parameters:
+         @0 = %Rx%
+
+| # | Id | Name   | OrganizationId |
+|---|----|--------|----------------|
+| 1 |  1 | Rx A   |              1 |
+| 2 |  2 | Rx B   |              2 |
+| 3 |  3 | Rx B-2 |              4 |
+
+
+
+=============================
+Executing:
+SELECT "Id", "Name", "OrganizationId"
+FROM (SELECT t.* FROM "Prescription" AS t INNER JOIN OrganizationDRO o ON o.OrganizationId = @OrganizationId AND o.ChildId = t.OrganizationId) AS "Prescription"
+WHERE "Name" like @0
+
+Parameters:
+         @0 = %Rx%
+         OrganizationId = 2
+
+| # | Id | Name   | OrganizationId |
+|---|----|--------|----------------|
+| 1 |  2 | Rx B   |              2 |
+| 2 |  3 | Rx B-2 |              4 |
+
+
+
+=============================
+```
